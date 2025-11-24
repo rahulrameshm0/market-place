@@ -2,38 +2,80 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-    <div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 round-xl">
+<div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 round-xl">
     <h1 class="mb-6 text-3xl">Sign Up</h1>
+
     <form action="" method="POST">
         {% csrf_token %}
-        <!-- {% comment %} {{form.as_p}} {% endcomment %} -->
-
 
         <div class="mb-3">
-            <label for="" class="inline-block mb-2">Username</label><br>
-            {{form.username}}
+            <label class="inline-block mb-2">Username</label>
+            {{ form.username }}
         </div>
+
         <div class="mb-3">
-            <label for="" class="inline-block mb-2">Email</label><br>
-            {{form.email}}
+            <label class="inline-block mb-2">Email</label>
+            {{ form.email }}
         </div>
+
+        <!-- PASSWORD FIELD -->
         <div class="mb-3">
-            <label for="" class="inline-block mb-2">Password</label><br>
-            {{form.password1}}
+            <label class="inline-block mb-2">Password</label>
+            <div class="relative">
+                {{ form.password1 }}
+                <span 
+                    id="togglePassword1"
+                    class="absolute inset-y-0 right-3 flex items-center cursor-pointer select-none text-gray-600"
+                >👁️</span>
+            </div>
         </div>
+
+        <!-- CONFIRM PASSWORD FIELD -->
         <div class="mb-3">
-            <label for="" class="inline-block mb-2">Confirm Password</label><br>
-            {{form.password2}}
+            <label class="inline-block mb-2">Confirm Password</label>
+            <div class="relative">
+                {{ form.password2 }}
+                <span 
+                    id="togglePassword2"
+                    class="absolute inset-y-0 right-3 flex items-center cursor-pointer select-none text-gray-600"
+                >👁️</span>
+            </div>
         </div>
+
         {% if form.errors or form.non_field_errors %}
-          <div class="mb-3 p-6 bg-red-100 rounded-xl">
+        <div class="mb-3 p-6 bg-red-100 rounded-xl">
             {% for field in form %}
-              {{field.errors}}
+                {{ field.errors }}
             {% endfor %}
-            {{form.non_field_errors}}
-          </div>
+            {{ form.non_field_errors }}
+        </div>
         {% endif %}
-          <button type="submit" class="py-4 px-8 text-lg bg-teal-500 hove:bg-teal-700 rounded-xl text-white" >Submit</button>
+
+        <button 
+            type="submit" 
+            class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white"
+        >
+            Submit
+        </button>
     </form>
-    </div>
+</div>
+
+<!-- PASSWORD TOGGLE SCRIPT -->
+<script>
+    function togglePassword(inputId, toggleId) {
+        const input = document.getElementById(inputId);
+        const toggle = document.getElementById(toggleId);
+
+        toggle.addEventListener("click", () => {
+            const isHidden = input.type === "password";
+            input.type = isHidden ? "text" : "password";
+            toggle.textContent = isHidden ? "🙈" : "👁️";
+        });
+    }
+
+    // Django automatically renders these IDs:
+    togglePassword("id_password1", "togglePassword1");
+    togglePassword("id_password2", "togglePassword2");
+</script>
+
 {% endblock content %}
