@@ -12,7 +12,7 @@ def new_conversation(request,item_pk):
 
     conversation = Conversation.objects.filter(item=item).filter(members__in=[request.user.id]).first()
     if conversation:
-        return redirect('concersation:details', pk=conversation.first().id)
+        return redirect('conversation:details', pk=conversation.id)
 
     if request.method == "POST":
         form = ConversationMessageForm(request.POST)
