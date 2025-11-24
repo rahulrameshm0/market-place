@@ -31,7 +31,9 @@ ALLOWED_HOSTS = [
     "online-shop-6ocq.onrender.com",
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://online-shop-6ocq.onrender.com",
+]
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
